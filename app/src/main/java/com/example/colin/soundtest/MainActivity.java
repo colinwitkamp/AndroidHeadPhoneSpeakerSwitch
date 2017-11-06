@@ -1,5 +1,8 @@
 package com.example.colin.soundtest;
 
+import android.content.Context;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,7 +15,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
-
+    public static Boolean mode = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +36,9 @@ public class MainActivity extends AppCompatActivity {
         btPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MediaPlayer ring= MediaPlayer.create(MainActivity.this,R.raw.ring);
+                Context context = MainActivity.this;
+                MediaPlayer ring= MediaPlayer.create(context, R.raw.ring);
+                ring.setAudioStreamType(AudioManager.STREAM_MUSIC);
                 ring.setLooping(true);
                 ring.start();
             }
@@ -41,9 +46,17 @@ public class MainActivity extends AppCompatActivity {
 
         Button btSwitch = findViewById(R.id.switch_mode);
         btSwitch.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                
+                MainActivity.mode = !MainActivity.mode;
+                Context context = MainActivity.this;
+
+                AudioManager audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
+                audioManager.setMode(AudioManager.STREAM_MUSIC);
+
+                audioManager.setSpeakerphoneOn(MainActivity.mode);
+
             }
         });
     }
