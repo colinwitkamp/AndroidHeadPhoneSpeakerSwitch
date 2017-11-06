@@ -39,11 +39,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button btSwitch = findViewById(R.id.switch);
+        Button btSwitch = findViewById(R.id.switch_mode);
         btSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                
             }
         });
     }
